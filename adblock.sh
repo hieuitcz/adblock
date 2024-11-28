@@ -8,31 +8,31 @@ opkg install tcpdump-mini
 
 uci set adblock.global.adb_backupdir="/etc/adblock"
 
-cp /etc/adblock/adblock.sources.gz /etc/adblock/adblock.sources.tofu.gz
-gunzip /etc/adblock/adblock.sources.tofu.gz
+cp /etc/adblock/adblock.sources.gz /etc/adblock/adblock.sources.hieudz.gz
+gunzip /etc/adblock/adblock.sources.hieudz.gz
 
-sed -i -e '$d' /etc/adblock/adblock.sources.tofu
-sed -i -e '$d' /etc/adblock/adblock.sources.tofu
-cat <<"EOF" >> /etc/adblock/adblock.sources.tofu
+sed -i -e '$d' /etc/adblock/adblock.sources.hieudz
+sed -i -e '$d' /etc/adblock/adblock.sources.hieudz
+cat <<"EOF" >> /etc/adblock/adblock.sources.hieudz
                 },
-                "tofu": {
-                                "url": "https://raw.githubusercontent.com/tofukko/filter/master/Adblock_Plus_list.txt",
-                                "rule": "BEGIN{FS=\"[|^]\"}/^\\|\\|([[:alnum:]_-]{1,63}\\.)+[[:alpha:]]+\\^(\\$third-party)?$/{print tolower($3)}",
-                                "size": "XL",
-                                "focus": "tofu",
-                                "descurl": "https://github.com/tofukko/filter"
+        "hieudz": {
+                "url": "https://raw.githubusercontent.com/bigdargon/hostsVN/master/option/hosts-VN",
+                "rule": "/^0\\.0\\.0\\.0[[:space:]]+([[:alnum:]_-]{1,63}\\.)+[[:alpha:]]+([[:space:]]|$)/{print tolower($2)}",
+                "size": "S",
+                "focus": "hieudz",
+                "descurl": "https://bigdargon.github.io/hostsVN"
                 }
 }
 EOF
 
-gzip /etc/adblock/adblock.sources.tofu
+gzip /etc/adblock/adblock.sources.hieudz
 
-uci set adblock.global.adb_srcarc="/etc/adblock/adblock.sources.tofu.gz"
+uci set adblock.global.adb_srcarc="/etc/adblock/adblock.sources.hieudz.gz"
 uci set adblock.global.adb_enabled="1"
 uci set adblock.global.adb_backup="1"
 uci set adblock.global.adb_backupdir="/etc/adblock"
 uci set adblock.global.adb_backup_mode="1"
-uci add_list adblock.global.adb_sources='tofu'
+uci add_list adblock.global.adb_sources='hieudz'
 
 uci commit adblock
 service adblock enable
